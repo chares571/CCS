@@ -90,8 +90,6 @@
                         <li id="r1">8-20 characters</li>
                         <li id="r2">At least one uppercase and one lowercase letter</li>
                         <li id="r3">At least one number</li>
-                        <li id="r4">No spaces</li>
-                        <li id="r5">Disallow ; : " ' / .</li>
                         <li id="r6">Confirm password matches</li>
                     </ul>
 

@@ -17,6 +17,10 @@ class AuthController extends Controller
 
     public function showLogin()
     {
+        if (Auth::check()) {
+            return $this->redirectByRole((string) Auth::user()->role);
+        }
+
         return view('auth.login');
     }
 
@@ -125,7 +129,7 @@ class AuthController extends Controller
         $user->force_password_change = false;
         $user->save();
 
-        return redirect()->route('password.request.parent-student')->with('success', 'Password recovery successful. You may now sign in.');
+        return redirect()->route('login')->with('success', 'Password recovery successful. You may now sign in.');
     }
 
     private function namesRoughlyMatch(string $inputName, string $storedName): bool
@@ -177,7 +181,8 @@ class AuthController extends Controller
         return match ($role) {
             'super_admin' => redirect()->route('master.dashboard'),
             'admin' => redirect()->route('admin.dashboard'),
-            default => redirect()->route('homepage'),
+            'parent', 'student' => redirect()->route('homepage.feed'),
+            default => redirect()->route('homepage.feed'),
         };
     }
 }

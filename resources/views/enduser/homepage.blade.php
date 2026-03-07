@@ -46,7 +46,7 @@
     </div>
 
     @if($activeSchoolYear && ($isEnrollmentOpen ?? false))
-        <form method="POST" action="{{ route('applications.store') }}" enctype="multipart/form-data" class="js-enduser-enrollment-form" data-readonly="0">
+        <form method="POST" action="{{ route('applications.store') }}" class="js-enduser-enrollment-form" data-readonly="0">
             @csrf
             <div class="enrollment-paper">
                 @include('enduser.partials.enrollment-paper-head', [
@@ -58,9 +58,6 @@
                     'readonly' => false,
                 ])
             </div>
-
-            <label>Supporting Image (optional)</label>
-            <input type="file" name="supporting_image" accept=".jpg,.jpeg,.png">
             <button class="btn" type="submit" style="margin-top:10px;">Submit Application</button>
         </form>
     @else
