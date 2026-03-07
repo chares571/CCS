@@ -3015,7 +3015,9 @@ tr:nth-child(even) td { background: #fbfdff; }
     }
 
     .welcome-card-content {
-        grid-template-columns: 1fr;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
         gap: 18px;
     }
 
@@ -3023,13 +3025,24 @@ tr:nth-child(even) td { background: #fbfdff; }
         max-width: 100%;
         text-align: center;
         margin: 0 auto;
+        display: contents;
+    }
+
+    .welcome-kicker {
+        order: 1;
     }
 
     .welcome-message h1 {
+        order: 2;
         margin-bottom: 20px;
     }
 
+    .welcome-logo-stage {
+        order: 3;
+    }
+
     .welcome-actions {
+        order: 4;
         justify-content: center;
     }
 
