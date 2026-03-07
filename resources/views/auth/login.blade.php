@@ -23,7 +23,7 @@
 
         <div class="welcome-card-content auth-welcome-content">
             <section class="auth-welcome-message">
-                <p class="welcome-kicker">Welcome back</p>
+                <p class="welcome-kicker">Welcome back!</p>
                 <h1>Sign in to stay updated with latest announcements.</h1>
             </section>
 
