@@ -46,11 +46,11 @@ Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::middleware('guest')->group(function () {
     Route::post('/register', [AuthController::class, 'register']);
     Route::post('/login', [AuthController::class, 'login'])->middleware('throttle:5,1');
-
-    Route::redirect('/forgot-password', '/forgot-password/parent-student');
-    Route::view('/forgot-password/parent-student', 'auth.forgot-password-parent-student')->name('password.request.parent-student');
-    Route::post('/forgot-password/parent-student', [AuthController::class, 'recoverParentStudentPassword'])->name('password.recover.parent-student');
 });
+
+Route::redirect('/forgot-password', '/forgot-password/parent-student');
+Route::view('/forgot-password/parent-student', 'auth.forgot-password-parent-student')->name('password.request.parent-student');
+Route::post('/forgot-password/parent-student', [AuthController::class, 'recoverParentStudentPassword'])->name('password.recover.parent-student');
 
 // Logout must always resolve to welcome page even if session is already expired.
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');

@@ -3224,29 +3224,38 @@ tr:nth-child(even) td { background: #fbfdff; }
     top: 50%;
     right: 8px;
     transform: translateY(-50%);
-    width: 34px;
-    height: 34px;
-    border: 0;
-    border-radius: 10px;
-    background: #e1edf9;
-    color: #1e4b77;
+    width: 36px;
+    height: 36px;
+    border: 1px solid #c4d8eb;
+    border-radius: 11px;
+    background: linear-gradient(180deg, #eff6ff 0%, #dfeefe 100%);
+    color: #194a78;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.8);
     display: grid;
     place-items: center;
     cursor: pointer;
-    transition: background .14s ease, transform .14s ease;
+    transition: background .14s ease, transform .14s ease, box-shadow .14s ease, border-color .14s ease;
 }
 
 .auth-password-toggle:hover {
-    background: #d1e3f5;
+    background: linear-gradient(180deg, #e6f1fd 0%, #d3e5f8 100%);
+    border-color: #aac5de;
+    box-shadow: 0 4px 10px rgba(17, 64, 104, .16), inset 0 1px 0 rgba(255,255,255,.84);
     transform: translateY(-50%) scale(1.03);
 }
 
+.auth-password-toggle:focus-visible {
+    outline: none;
+    border-color: #5b96cb;
+    box-shadow: 0 0 0 3px rgba(63,137,194,.25);
+}
+
 .auth-password-toggle .eye {
-    width: 17px;
-    height: 17px;
+    width: 18px;
+    height: 18px;
     fill: none;
     stroke: currentColor;
-    stroke-width: 1.9;
+    stroke-width: 1.8;
     stroke-linecap: round;
     stroke-linejoin: round;
 }

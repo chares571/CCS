@@ -125,7 +125,7 @@ class AuthController extends Controller
         $user->force_password_change = false;
         $user->save();
 
-        return redirect()->route('login')->with('success', 'Password recovery successful. You may now sign in.');
+        return redirect()->route('password.request.parent-student')->with('success', 'Password recovery successful. You may now sign in.');
     }
 
     private function namesRoughlyMatch(string $inputName, string $storedName): bool

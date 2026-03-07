@@ -44,14 +44,15 @@
                         <input id="login_password" class="auth-password-input" type="password" name="password" placeholder="Enter your password" autocomplete="current-password" required>
                         <button type="button" class="auth-password-toggle" data-toggle-password="login_password" aria-label="Show password" aria-pressed="false">
                             <svg class="eye eye-open" viewBox="0 0 24 24" aria-hidden="true">
-                                <path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6-10-6-10-6z"></path>
-                                <circle cx="12" cy="12" r="3.2"></circle>
+                                <path d="M2.5 12s3.6-6.2 9.5-6.2S21.5 12 21.5 12s-3.6 6.2-9.5 6.2S2.5 12 2.5 12z"></path>
+                                <circle cx="12" cy="12" r="3"></circle>
+                                <path d="M12 9v6"></path>
                             </svg>
                             <svg class="eye eye-closed" viewBox="0 0 24 24" aria-hidden="true">
-                                <path d="M3 3l18 18"></path>
-                                <path d="M10.6 6.3A11.3 11.3 0 0 1 12 6c6.5 0 10 6 10 6a17.5 17.5 0 0 1-3.4 4.1"></path>
-                                <path d="M6.1 6.1A17.8 17.8 0 0 0 2 12s3.5 6 10 6c1.6 0 3-.3 4.2-.9"></path>
-                                <path d="M9.9 9.9a3.2 3.2 0 0 0 4.2 4.2"></path>
+                                <path d="M4 4l16 16"></path>
+                                <path d="M9.7 6.1A10.8 10.8 0 0 1 12 5.8c5.9 0 9.5 6.2 9.5 6.2a16.2 16.2 0 0 1-3 3.7"></path>
+                                <path d="M6.7 6.8A16.4 16.4 0 0 0 2.5 12s3.6 6.2 9.5 6.2c1.8 0 3.4-.4 4.7-1.1"></path>
+                                <path d="M10.4 10.4a3 3 0 0 0 4.2 4.2"></path>
                             </svg>
                         </button>
                     </div>
