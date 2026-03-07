@@ -87,7 +87,7 @@
                     <button class="btn btn-auth mt-12" type="submit">Recover Account</button>
                 </form>
 
-                <p class="auth-foot-link"><a href="{{ route('login') }}">Back to Login</a></p>
+                <p class="auth-foot-link"><a href="{{ route('login') }}">Back to Sign In</a></p>
             </section>
         </div>
 
