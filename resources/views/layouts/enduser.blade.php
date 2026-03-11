@@ -107,6 +107,7 @@
 
     const openModal = (form) => {
         pendingForm = form;
+        document.body.classList.remove('enduser-account-open');
         modal.classList.add('is-open');
         modal.setAttribute('aria-hidden', 'false');
         document.body.classList.add('modal-open');

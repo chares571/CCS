@@ -62,7 +62,7 @@
                 <div
                     class="grade-bar-item"
                     style="--bar-color-start: {{ $barStart }}; --bar-color-end: {{ $barEnd }};"
-                    data-tooltip="Male: {{ $maleByGrade }} | Female: {{ $femaleByGrade }}"
+                    data-tooltip="Male: {{ $maleByGrade }}&#10;Female: {{ $femaleByGrade }}"
                 >
                     <div class="grade-bar-value">{{ $count }}</div>
                     <div class="grade-bar-track">

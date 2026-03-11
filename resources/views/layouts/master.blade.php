@@ -47,7 +47,6 @@
                         <span class="sidebar-toggle__bar"></span>
                         <span class="sidebar-toggle__bar"></span>
                     </span>
-                    <span class="sidebar-toggle__label">Menu</span>
                 </button>
                 <div>
                     <h1 class="page-title">@yield('page_title', 'Dashboard')</h1>
