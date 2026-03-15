@@ -32,6 +32,7 @@ class Application extends Model
         'four_ps_household_id',
         'is_lwd',
         'disability_types',
+        'disability_specify',
         'current_house_no',
         'current_street',
         'current_barangay',

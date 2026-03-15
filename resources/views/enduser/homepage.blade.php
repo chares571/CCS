@@ -16,9 +16,9 @@
         @if($activeSchoolYear->enrollment_start_at || $activeSchoolYear->enrollment_end_at)
             <p class="muted">
                 Window:
-                {{ optional($activeSchoolYear->enrollment_start_at)->format('M d, Y h:i A') ?? 'N/A' }}
+                {{ optional($activeSchoolYear->enrollment_start_at)->format('m/d/Y h:i A') ?? 'N/A' }}
                 to
-                {{ optional($activeSchoolYear->enrollment_end_at)->format('M d, Y h:i A') ?? 'N/A' }}
+                {{ optional($activeSchoolYear->enrollment_end_at)->format('m/d/Y h:i A') ?? 'N/A' }}
             </p>
         @endif
     @endif
@@ -31,7 +31,7 @@
             </div>
             <div>
                 <p class="muted">Latest Submitted</p>
-                <strong>{{ optional($latestApplication->submitted_at)->format('M d, Y h:i A') ?? 'Not available' }}</strong>
+                <strong>{{ optional($latestApplication->submitted_at)->format('m/d/Y h:i A') ?? 'Not available' }}</strong>
             </div>
             <div class="enduser-status-cta">
                 <a class="btn btn-secondary" href="{{ route('applications.show', $latestApplication) }}">Open Latest Timeline</a>
@@ -48,17 +48,22 @@
     @if($activeSchoolYear && ($isEnrollmentOpen ?? false))
         <form method="POST" action="{{ route('applications.store') }}" class="js-enduser-enrollment-form" data-readonly="0">
             @csrf
-            <div class="enrollment-paper">
-                @include('enduser.partials.enrollment-paper-head', [
-                    'application' => null,
-                    'activeSchoolYear' => $activeSchoolYear,
-                ])
-                @include('enduser.partials.enrollment-form-fields', [
-                    'application' => null,
-                    'readonly' => false,
-                ])
+            <section class="enrollment-paper-wrap">
+                <article class="enrollment-paper">
+                    @include('enduser.partials.enrollment-paper-head', [
+                        'application' => null,
+                        'activeSchoolYear' => $activeSchoolYear,
+                    ])
+                    @include('enduser.partials.enrollment-form-fields', [
+                        'application' => null,
+                        'readonly' => false,
+                    ])
+                </article>
+            </section>
+
+            <div class="enrollment-actions enrollment-actions--center">
+                <button class="btn" type="submit">Submit Application</button>
             </div>
-            <button class="btn" type="submit" style="margin-top:10px;">Submit Application</button>
         </form>
     @else
         <p class="muted">Please wait for the school to open enrollment before submitting a form.</p>
@@ -86,7 +91,7 @@
             @forelse($applications as $entry)
                 <tr>
                     <td data-label="Learner">{{ $entry->learner_full_name }}</td>
-                    <td data-label="Submitted">{{ optional($entry->submitted_at)->format('M d, Y h:i A') ?? '-' }}</td>
+                    <td data-label="Submitted">{{ optional($entry->submitted_at)->format('m/d/Y h:i A') ?? '-' }}</td>
                     <td data-label="Status"><span class="badge {{ $entry->status }}">{{ \App\Support\StatusLabel::for($entry->status) }}</span></td>
                     <td data-label="Grade Level">{{ $entry->grade_level }}</td>
                     <td data-label="Action"><a class="btn btn-secondary" href="{{ route('applications.show', $entry) }}">Open Timeline</a></td>
@@ -139,6 +144,95 @@
         refresh();
     };
 
+    const bindDisabilitySpecifyField = (form) => {
+        const lwdRadios = form.querySelectorAll('input[name="is_lwd"]');
+        const otherCheckbox = form.querySelector('input[name="disability_types[]"][value="other_disability"]');
+        const specifyInput = form.querySelector('input[name="disability_specify"]');
+        const specifyWrap = form.querySelector('[data-disability-specify-wrap]');
+
+        if (!lwdRadios.length || !otherCheckbox || !specifyInput) {
+            return;
+        }
+
+        const refresh = () => {
+            const lwdChecked = form.querySelector('input[name="is_lwd"]:checked');
+            const lwdEnabled = lwdChecked && lwdChecked.value === '1';
+            const show = lwdEnabled && otherCheckbox.checked;
+
+            specifyInput.disabled = !show;
+            if (!show) {
+                specifyInput.value = '';
+            }
+            if (specifyWrap) {
+                specifyWrap.hidden = !show;
+            }
+        };
+
+        lwdRadios.forEach((radio) => radio.addEventListener('change', refresh));
+        otherCheckbox.addEventListener('change', refresh);
+        refresh();
+    };
+
+    const bindSameAddressField = (form) => {
+        const checkbox = form.querySelector('input[name="permanent_same_as_current"]');
+        if (!checkbox) {
+            return;
+        }
+
+        const mappings = [
+            ['current_house_no', 'permanent_house_no'],
+            ['current_street', 'permanent_street'],
+            ['current_barangay', 'permanent_barangay'],
+            ['current_municipality', 'permanent_municipality'],
+            ['current_province', 'permanent_province'],
+            ['current_country', 'permanent_country'],
+            ['current_zip_code', 'permanent_zip_code'],
+        ];
+
+        const currentFields = mappings
+            .map(([from]) => form.querySelector(`input[name="${from}"]`))
+            .filter(Boolean);
+        const permanentFields = mappings
+            .map(([, to]) => form.querySelector(`input[name="${to}"]`))
+            .filter(Boolean);
+
+        if (!currentFields.length || permanentFields.length !== mappings.length) {
+            return;
+        }
+
+        const copy = () => {
+            mappings.forEach(([from, to]) => {
+                const fromField = form.querySelector(`input[name="${from}"]`);
+                const toField = form.querySelector(`input[name="${to}"]`);
+                if (!fromField || !toField) {
+                    return;
+                }
+                toField.value = fromField.value;
+            });
+        };
+
+        const refresh = () => {
+            const enabled = checkbox.checked;
+            permanentFields.forEach((field) => {
+                field.readOnly = enabled;
+            });
+            if (enabled) {
+                copy();
+            }
+        };
+
+        checkbox.addEventListener('change', refresh);
+        currentFields.forEach((field) => {
+            field.addEventListener('input', () => {
+                if (checkbox.checked) {
+                    copy();
+                }
+            });
+        });
+
+        refresh();
+    };
+
     forms.forEach((form) => {
         if (form.dataset.readonly === '1') {
             return;
@@ -158,6 +252,8 @@
         bindConditionalField(form, 'has_ip_affiliation', 'input[name="ip_affiliation"]');
         bindConditionalField(form, 'is_4ps_beneficiary', 'input[name="four_ps_household_id"]');
         bindConditionalField(form, 'is_lwd', 'input[name="disability_types[]"]');
+        bindDisabilitySpecifyField(form);
+        bindSameAddressField(form);
     });
 })();
 </script>

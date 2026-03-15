@@ -80,6 +80,10 @@ class AuthController extends Controller
         // Ensure first redirect after a successful login always reaches the role landing page.
         $request->session()->put('allow_role_landing_once', true);
 
+        if (in_array((string) $user->role, ['super_admin', 'admin'], true) && $this->requiresAdminSecuritySetup($user)) {
+            return redirect()->route('account.security.setup.form');
+        }
+
         if ($user->force_password_change && in_array((string) $user->role, ['super_admin', 'admin'], true)) {
             return redirect()->route('password.change.form');
         }
@@ -87,86 +91,20 @@ class AuthController extends Controller
         return $this->redirectByRole($user->role);
     }
 
-    public function recoverParentStudentPassword(Request $request)
+    private function requiresAdminSecuritySetup(User $user): bool
     {
-        $validated = $request->validate([
-            'email' => ['required', 'email', 'max:255'],
-            'full_name' => ['required', 'string', 'max:255'],
-            'password' => ['required', 'confirmed', 'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?!.*[;:"\'\/\.])(?=\S+$).{8,20}$/'],
-        ]);
+        $email = mb_strtolower((string) $user->email);
+        $domains = (array) config('ccs.admin_account_security.local_email_domains', ['ccs.local']);
+        $domains = array_values(array_filter(array_map('trim', $domains), fn ($value) => $value !== ''));
 
-        return $this->recoverPasswordByRoles($request, $validated, ['parent', 'student']);
-    }
-
-    private function recoverPasswordByRoles(Request $request, array $validated, array $roles): \Illuminate\Http\RedirectResponse
-    {
-        $user = User::query()
-            ->whereIn('role', $roles)
-            ->where('email', $validated['email'])
-            ->first();
-
-        if (!$user) {
-            return back()->withErrors([
-                'email' => 'Account details do not match our records.',
-            ])->withInput($request->except(['password', 'password_confirmation']));
-        }
-
-        if (!$this->namesRoughlyMatch((string) $validated['full_name'], (string) $user->full_name)) {
-            return back()->withErrors([
-                'full_name' => 'Account details do not match our records.',
-            ])->withInput($request->except(['password', 'password_confirmation']));
-        }
-
-        if (!$user->is_active) {
-            return back()->withErrors([
-                'email' => 'Account is inactive. Contact Super Admin.',
-            ])->withInput($request->except(['password', 'password_confirmation']));
-        }
-
-        if (Hash::check((string) $validated['password'], (string) $user->password)) {
-            return back()->withErrors([
-                'password' => 'New password must be different from your previous password.',
-            ])->withInput($request->except(['password', 'password_confirmation']));
-        }
-
-        $user->password = Hash::make((string) $validated['password']);
-        $user->force_password_change = false;
-        $user->save();
-
-        return redirect()->route('login')->with('success', 'Password recovery successful. You may now sign in.');
-    }
-
-    private function namesRoughlyMatch(string $inputName, string $storedName): bool
-    {
-        $normalizedInput = $this->normalizeComparableName($inputName);
-        $normalizedStored = $this->normalizeComparableName($storedName);
-
-        if ($normalizedInput === '' || $normalizedStored === '') {
-            return false;
-        }
-
-        if ($normalizedInput === $normalizedStored) {
-            return true;
-        }
-
-        $inputTokens = array_values(array_filter(explode(' ', $normalizedInput)));
-        $storedTokens = array_values(array_filter(explode(' ', $normalizedStored)));
-        $storedMap = array_fill_keys($storedTokens, true);
-
-        foreach ($inputTokens as $token) {
-            if (!isset($storedMap[$token])) {
-                return false;
+        foreach ($domains as $domain) {
+            $needle = '@'.mb_strtolower($domain);
+            if ($needle !== '@' && Str::endsWith($email, $needle)) {
+                return true;
             }
         }
 
-        return true;
-    }
-
-    private function normalizeComparableName(string $value): string
-    {
-        $normalized = strtoupper(trim($value));
-        $normalized = preg_replace('/[^A-Z0-9\s]/', ' ', $normalized) ?? '';
-        return trim((string) preg_replace('/\s+/', ' ', $normalized));
+        return false;
     }
 
     public function logout(Request $request)

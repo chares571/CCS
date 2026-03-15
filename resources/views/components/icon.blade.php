@@ -231,6 +231,31 @@
         </svg>
         @break
 
+    @case('pin')
+        <svg class="{{ $classes }}" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M14 4l6 6"></path>
+            <path d="M8 10l6-6 6 6-6 6z"></path>
+            <path d="M8 16l-4 4"></path>
+            <path d="M10 14l-6 6"></path>
+        </svg>
+        @break
+
+    @case('undo')
+        <svg class="{{ $classes }}" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M9 10H4l3-3"></path>
+            <path d="M4 10l3 3"></path>
+            <path d="M4 10h9a7 7 0 1 1 0 14h-2"></path>
+        </svg>
+        @break
+
+    @case('redo')
+        <svg class="{{ $classes }}" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M15 10h5l-3-3"></path>
+            <path d="M20 10l-3 3"></path>
+            <path d="M20 10H11a7 7 0 1 0 0 14h2"></path>
+        </svg>
+        @break
+
     @case('delete')
         <svg class="{{ $classes }}" viewBox="0 0 24 24" aria-hidden="true">
             <path d="M4 7h16"></path>
@@ -253,6 +278,13 @@
             <path d="M14 17l-5-5 5-5"></path>
             <path d="M9 12h12"></path>
             <path d="M16 4H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h9"></path>
+        </svg>
+        @break
+
+    @case('back')
+        <svg class="{{ $classes }}" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M15 18l-6-6 6-6"></path>
+            <path d="M9 12h12"></path>
         </svg>
         @break
 

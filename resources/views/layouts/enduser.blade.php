@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en-US">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -86,8 +86,8 @@
         <h2 id="logoutConfirmTitle">Confirm Logout</h2>
         <p id="logoutConfirmDesc">Are you sure you want to log out from your account?</p>
         <div class="logout-modal__actions">
-            <button type="button" class="btn btn-logout" data-dismiss-logout>Cancel</button>
-            <button type="button" class="btn" id="logoutConfirmBtn">Log Out</button>
+            <button type="button" class="btn btn-danger" data-dismiss-logout>Cancel</button>
+            <button type="button" class="btn btn-logout" id="logoutConfirmBtn">Log Out</button>
         </div>
     </div>
 </div>

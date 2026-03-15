@@ -51,7 +51,7 @@
             <tbody>
             @forelse($logs as $log)
                 <tr>
-                    <td>{{ $log->created_at->format('M d, Y h:i A') }}</td>
+                    <td>{{ $log->created_at->format('m/d/Y h:i A') }}</td>
                     <td>{{ $log->action }}</td>
                     <td>{{ $log->entity_type }}</td>
                     <td>{{ $log->entity_id ?? '-' }}</td>

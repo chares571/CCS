@@ -51,7 +51,7 @@
         @if($activeSchoolYear)
             <form method="POST" action="{{ route('master.school-years.toggle', $activeSchoolYear) }}">
                 @csrf
-                <button class="btn btn-secondary" type="submit">
+                <button class="btn {{ $activeSchoolYear->isEnrollmentSwitchOpen() ? 'btn-danger' : 'btn-secondary' }}" type="submit">
                     {{ $activeSchoolYear->isEnrollmentSwitchOpen() ? 'Set Closed' : 'Set Open' }}
                 </button>
             </form>
@@ -69,11 +69,11 @@
                 @method('PUT')
                 <div style="min-width: 240px;">
                     <label>Enrollment Start</label>
-                    <input type="datetime-local" name="enrollment_start_at" value="{{ optional($activeSchoolYear->enrollment_start_at)->format('Y-m-d\\TH:i') }}">
+                    <input type="datetime-local" lang="en-US" name="enrollment_start_at" value="{{ optional($activeSchoolYear->enrollment_start_at)->format('Y-m-d\\TH:i') }}">
                 </div>
                 <div style="min-width: 240px;">
                     <label>Enrollment End</label>
-                    <input type="datetime-local" name="enrollment_end_at" value="{{ optional($activeSchoolYear->enrollment_end_at)->format('Y-m-d\\TH:i') }}">
+                    <input type="datetime-local" lang="en-US" name="enrollment_end_at" value="{{ optional($activeSchoolYear->enrollment_end_at)->format('Y-m-d\\TH:i') }}">
                 </div>
                 <div style="align-self: end;">
                     <button class="btn" type="submit">Save Window</button>
@@ -123,9 +123,9 @@
                         @endif
                     </td>
                     <td>
-                        {{ optional($sy->enrollment_start_at)->format('M d, Y h:i A') ?? 'N/A' }}
+                        {{ optional($sy->enrollment_start_at)->format('m/d/Y h:i A') ?? 'N/A' }}
                         <br>
-                        {{ optional($sy->enrollment_end_at)->format('M d, Y h:i A') ?? 'N/A' }}
+                        {{ optional($sy->enrollment_end_at)->format('m/d/Y h:i A') ?? 'N/A' }}
                     </td>
                     <td>
                         <span class="badge {{ ($sy->approved_applications_count ?? 0) > 0 ? 'reviewed' : 'approved' }}">

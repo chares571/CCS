@@ -41,51 +41,12 @@
                     <div class="alert alert-error">{{ $errors->first() }}</div>
                 @endif
 
-                <form method="POST" action="{{ route('password.recover.parent-student') }}">
+                <form method="POST" action="{{ route('password.request-code.parent-student') }}">
                     @csrf
                     <label>Email Address</label>
                     <input type="email" name="email" value="{{ old('email') }}" placeholder="Enter your email" autocomplete="email" required>
 
-                    <label>Full Name</label>
-                    <input type="text" name="full_name" value="{{ old('full_name') }}" placeholder="Enter full name" autocomplete="name" required>
-
-                    <label>New Password</label>
-                    <div class="auth-password-wrap">
-                        <input id="recover_password" class="auth-password-input" type="password" name="password" placeholder="Create a new password" autocomplete="new-password" required>
-                        <button type="button" class="auth-password-toggle" data-toggle-password="recover_password" aria-label="Show password" aria-pressed="false">
-                            <svg class="eye eye-open" viewBox="0 0 24 24" aria-hidden="true">
-                                <path d="M2.5 12s3.6-6.2 9.5-6.2S21.5 12 21.5 12s-3.6 6.2-9.5 6.2S2.5 12 2.5 12z"></path>
-                                <circle cx="12" cy="12" r="3"></circle>
-                                <path d="M12 9v6"></path>
-                            </svg>
-                            <svg class="eye eye-closed" viewBox="0 0 24 24" aria-hidden="true">
-                                <path d="M4 4l16 16"></path>
-                                <path d="M9.7 6.1A10.8 10.8 0 0 1 12 5.8c5.9 0 9.5 6.2 9.5 6.2a16.2 16.2 0 0 1-3 3.7"></path>
-                                <path d="M6.7 6.8A16.4 16.4 0 0 0 2.5 12s3.6 6.2 9.5 6.2c1.8 0 3.4-.4 4.7-1.1"></path>
-                                <path d="M10.4 10.4a3 3 0 0 0 4.2 4.2"></path>
-                            </svg>
-                        </button>
-                    </div>
-
-                    <label>Confirm New Password</label>
-                    <div class="auth-password-wrap">
-                        <input id="recover_password_confirmation" class="auth-password-input" type="password" name="password_confirmation" placeholder="Confirm new password" autocomplete="new-password" required>
-                        <button type="button" class="auth-password-toggle" data-toggle-password="recover_password_confirmation" aria-label="Show password" aria-pressed="false">
-                            <svg class="eye eye-open" viewBox="0 0 24 24" aria-hidden="true">
-                                <path d="M2.5 12s3.6-6.2 9.5-6.2S21.5 12 21.5 12s-3.6 6.2-9.5 6.2S2.5 12 2.5 12z"></path>
-                                <circle cx="12" cy="12" r="3"></circle>
-                                <path d="M12 9v6"></path>
-                            </svg>
-                            <svg class="eye eye-closed" viewBox="0 0 24 24" aria-hidden="true">
-                                <path d="M4 4l16 16"></path>
-                                <path d="M9.7 6.1A10.8 10.8 0 0 1 12 5.8c5.9 0 9.5 6.2 9.5 6.2a16.2 16.2 0 0 1-3 3.7"></path>
-                                <path d="M6.7 6.8A16.4 16.4 0 0 0 2.5 12s3.6 6.2 9.5 6.2c1.8 0 3.4-.4 4.7-1.1"></path>
-                                <path d="M10.4 10.4a3 3 0 0 0 4.2 4.2"></path>
-                            </svg>
-                        </button>
-                    </div>
-
-                    <button class="btn btn-auth mt-12" type="submit">Recover Account</button>
+                    <button class="btn btn-auth mt-12" type="submit">Send Verification Code</button>
                 </form>
 
                 <p class="auth-foot-link"><a href="{{ route('login') }}">Back to Sign In</a></p>
@@ -97,21 +58,5 @@
         </footer>
     </main>
 </div>
-<script>
-document.querySelectorAll('[data-toggle-password]').forEach((button) => {
-    button.addEventListener('click', () => {
-        const id = button.getAttribute('data-toggle-password');
-        const input = id ? document.getElementById(id) : null;
-        if (!input) {
-            return;
-        }
-
-        const isHidden = input.type === 'password';
-        input.type = isHidden ? 'text' : 'password';
-        button.setAttribute('aria-pressed', isHidden ? 'true' : 'false');
-        button.setAttribute('aria-label', isHidden ? 'Hide password' : 'Show password');
-    });
-});
-</script>
 </body>
 </html>

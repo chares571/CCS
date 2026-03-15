@@ -61,7 +61,7 @@
                         </td>
                         <td>{{ $app->grade_level }}</td>
                         <td><span class="badge {{ $app->status }}">{{ \App\Support\StatusLabel::for($app->status) }}</span></td>
-                        <td>{{ optional($app->reviewed_at)->format('M d, Y h:i A') ?? '-' }}</td>
+                        <td>{{ optional($app->reviewed_at)->format('m/d/Y h:i A') ?? '-' }}</td>
                         <td><a class="btn" href="{{ route('admin.monitoring.show', $app) }}">View Enrollment Form</a></td>
                     </tr>
                 @endforeach

@@ -21,7 +21,7 @@
             <h3> Uploaded Documents</h3>
             @foreach($application->documents as $doc)
                 <p>
-                    <a href="{{ asset('storage/'.$doc->file_path) }}" target="_blank">{{ $doc->original_name }}</a>
+                    <a href="{{ '/storage/'.ltrim($doc->file_path, '/') }}" target="_blank">{{ $doc->original_name }}</a>
                 </p>
             @endforeach
         </div>
@@ -40,7 +40,7 @@
             <tbody>
             @forelse($application->statusLogs()->orderBy('changed_at')->get() as $log)
                 <tr>
-                    <td data-label="Date">{{ optional($log->changed_at)->timezone(config('app.timezone'))->format('M d, Y h:i A') ?? '-' }}</td>
+                    <td data-label="Date">{{ optional($log->changed_at)->timezone(config('app.timezone'))->format('m/d/Y h:i A') ?? '-' }}</td>
                     <td data-label="Status"><span class="badge {{ $log->status }}">{{ \App\Support\StatusLabel::for($log->status) }}</span></td>
                     <td data-label="Remarks">{{ $log->remarks ?: '-' }}</td>
                     <td data-label="Changed By">{{ optional($log->changedBy)->full_name ?? 'System' }}</td>

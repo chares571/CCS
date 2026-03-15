@@ -91,6 +91,7 @@
             <span>{{ $isChecked(in_array('multiple_disorder', $types, true)) }} Multiple Disorder</span>
             <span>{{ $isChecked(in_array('other_disability', $types, true)) }} Others</span>
         </div>
+        <div class="hpf-field"><label>Specify</label><div>{{ $lineValue(in_array('other_disability', $types, true) ? ($application?->disability_specify ?? null) : null) }}</div></div>
     </div>
 
     <div class="hpf-section-title">CURRENT ADDRESS</div>

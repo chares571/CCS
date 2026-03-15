@@ -111,7 +111,7 @@
                             <strong>Guardian Contact:</strong> {{ $application->guardian_contact_number ?: 'N/A' }}
                         </td>
                         <td><span class="badge {{ $displayStatusClass }}">{{ $displayStatus }}</span></td>
-                        <td>{{ optional($application->submitted_at)->format('M d, Y h:i A') ?? '-' }}</td>
+                        <td>{{ optional($application->submitted_at)->format('m/d/Y h:i A') ?? '-' }}</td>
                         <td class="action-row">
                             <a class="btn" href="{{ route('master.monitoring.show', $application) }}">View Enrollment Form</a>
                             @if($application->canReceiveFinalDecision())

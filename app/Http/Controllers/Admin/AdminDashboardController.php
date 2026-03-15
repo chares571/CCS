@@ -387,6 +387,7 @@ class AdminDashboardController extends Controller
             'is_lwd' => 'required|boolean',
             'disability_types' => 'nullable|array',
             'disability_types.*' => 'in:'.implode(',', self::DISABILITY_TYPES),
+            'disability_specify' => 'nullable|string|max:255',
             'current_house_no' => 'nullable|string|max:255',
             'current_street' => 'nullable|string|max:255',
             'current_barangay' => 'nullable|string|max:255',
@@ -423,6 +424,9 @@ class AdminDashboardController extends Controller
             $this->upperOrEmpty($validated['last_name'] ?? null).', '.$this->upperOrEmpty($validated['first_name'] ?? null).($middle !== '' ? ' '.$middle : '')
         );
 
+        $disabilityTypes = $validated['is_lwd'] ? ($validated['disability_types'] ?? []) : [];
+        $shouldStoreDisabilitySpecify = $validated['is_lwd'] && in_array('other_disability', $disabilityTypes, true);
+
         return [
             'learner_full_name' => $fullName,
             'grade_level' => $validated['grade_level'],
@@ -442,7 +446,8 @@ class AdminDashboardController extends Controller
             'is_4ps_beneficiary' => (bool) $validated['is_4ps_beneficiary'],
             'four_ps_household_id' => $validated['is_4ps_beneficiary'] ? $this->upperOrNull($validated['four_ps_household_id'] ?? null) : null,
             'is_lwd' => (bool) $validated['is_lwd'],
-            'disability_types' => $validated['is_lwd'] ? ($validated['disability_types'] ?? []) : [],
+            'disability_types' => $disabilityTypes,
+            'disability_specify' => $shouldStoreDisabilitySpecify ? $this->upperOrNull($validated['disability_specify'] ?? null) : null,
             'current_house_no' => $this->upperOrNull($validated['current_house_no'] ?? null),
             'current_street' => $this->upperOrNull($validated['current_street'] ?? null),
             'current_barangay' => $this->upperOrNull($validated['current_barangay'] ?? null),

@@ -62,7 +62,7 @@
                         <label class="auth-check">
                             <input type="checkbox" name="remember" value="1"> Remember me
                         </label>
-                        <a href="{{ route('password.request.parent-student') }}">Forgot Password?</a>
+                        <a href="{{ route('password.request') }}">Forgot Password?</a>
                     </div>
 
                     <button class="btn btn-auth" type="submit">Sign In</button>

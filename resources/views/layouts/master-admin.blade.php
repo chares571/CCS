@@ -35,6 +35,6 @@
     <span class="nav-ico"><x-icon name="backup" /></span> Backup
 </a>
 <a class="sidebar-link {{ request()->routeIs('master.settings.*') ? 'active' : '' }}" href="{{ route('master.settings.index') }}">
-    <span class="nav-ico"><x-icon name="settings" /></span> Settings
+    <span class="nav-ico"><x-icon name="settings" /></span> Account Settings
 </a>
 @endsection

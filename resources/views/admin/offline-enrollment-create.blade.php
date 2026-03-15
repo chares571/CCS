@@ -85,6 +85,96 @@
         refresh();
     };
 
+    const bindDisabilitySpecifyField = () => {
+        const lwdRadios = form.querySelectorAll('input[name="is_lwd"]');
+        const otherCheckbox = form.querySelector('input[name="disability_types[]"][value="other_disability"]');
+        const specifyInput = form.querySelector('input[name="disability_specify"]');
+        const specifyWrap = form.querySelector('[data-disability-specify-wrap]');
+
+        if (!lwdRadios.length || !otherCheckbox || !specifyInput) {
+            return;
+        }
+
+        const refresh = () => {
+            const lwdChecked = form.querySelector('input[name="is_lwd"]:checked');
+            const lwdEnabled = lwdChecked && lwdChecked.value === '1';
+            const show = lwdEnabled && otherCheckbox.checked;
+
+            specifyInput.disabled = !show;
+            specifyInput.required = show;
+            if (!show) {
+                specifyInput.value = '';
+            }
+            if (specifyWrap) {
+                specifyWrap.hidden = !show;
+            }
+        };
+
+        lwdRadios.forEach((radio) => radio.addEventListener('change', refresh));
+        otherCheckbox.addEventListener('change', refresh);
+        refresh();
+    };
+
+    const bindSameAddressField = () => {
+        const checkbox = form.querySelector('input[name="permanent_same_as_current"]');
+        if (!checkbox) {
+            return;
+        }
+
+        const mappings = [
+            ['current_house_no', 'permanent_house_no'],
+            ['current_street', 'permanent_street'],
+            ['current_barangay', 'permanent_barangay'],
+            ['current_municipality', 'permanent_municipality'],
+            ['current_province', 'permanent_province'],
+            ['current_country', 'permanent_country'],
+            ['current_zip_code', 'permanent_zip_code'],
+        ];
+
+        const currentFields = mappings
+            .map(([from]) => form.querySelector(`input[name="${from}"]`))
+            .filter(Boolean);
+        const permanentFields = mappings
+            .map(([, to]) => form.querySelector(`input[name="${to}"]`))
+            .filter(Boolean);
+
+        if (!currentFields.length || permanentFields.length !== mappings.length) {
+            return;
+        }
+
+        const copy = () => {
+            mappings.forEach(([from, to]) => {
+                const fromField = form.querySelector(`input[name="${from}"]`);
+                const toField = form.querySelector(`input[name="${to}"]`);
+                if (!fromField || !toField) {
+                    return;
+                }
+                toField.value = fromField.value;
+            });
+        };
+
+        const refresh = () => {
+            const enabled = checkbox.checked;
+            permanentFields.forEach((field) => {
+                field.readOnly = enabled;
+            });
+            if (enabled) {
+                copy();
+            }
+        };
+
+        checkbox.addEventListener('change', refresh);
+        currentFields.forEach((field) => {
+            field.addEventListener('input', () => {
+                if (checkbox.checked) {
+                    copy();
+                }
+            });
+        });
+
+        refresh();
+    };
+
     form.querySelectorAll('input[type="text"], textarea').forEach((field) => {
         field.addEventListener('input', () => {
             const cursorPos = field.selectionStart;
@@ -99,6 +189,8 @@
     bindConditionalField('has_ip_affiliation', 'input[name="ip_affiliation"]');
     bindConditionalField('is_4ps_beneficiary', 'input[name="four_ps_household_id"]');
     bindConditionalField('is_lwd', 'input[name="disability_types[]"]');
+    bindDisabilitySpecifyField();
+    bindSameAddressField();
 
     form.addEventListener('submit', () => {
         const saveBtn = document.getElementById('assistedEnrollmentSaveBtn');

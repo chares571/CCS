@@ -47,7 +47,7 @@
                     <td>{{ $application->grade_level }}</td>
                     <td>{{ $application->schoolYear->year ?? $application->schoolYear->name ?? 'N/A' }}</td>
                     <td><span class="badge {{ $application->status }}">{{ \App\Support\StatusLabel::forSuperAdmin($application->status) }}</span></td>
-                    <td>{{ optional($application->submitted_at)->format('M d, Y h:i A') ?? optional($application->created_at)->format('M d, Y h:i A') }}</td>
+                    <td>{{ optional($application->submitted_at)->format('m/d/Y h:i A') ?? optional($application->created_at)->format('m/d/Y h:i A') }}</td>
                 </tr>
             @empty
                 <tr><td colspan="7">No enrollment history found.</td></tr>

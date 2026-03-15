@@ -22,4 +22,7 @@
 <a class="sidebar-link {{ request()->routeIs('admin.announcements.*') ? 'active' : '' }}" href="{{ route('admin.announcements.index') }}" style="margin-top: 8px;">
     <span class="nav-ico"><x-icon name="announcements" /></span> Announcements
 </a>
+<a class="sidebar-link {{ request()->routeIs('admin.settings.*') ? 'active' : '' }}" href="{{ route('admin.settings.index') }}" style="margin-top: 8px;">
+    <span class="nav-ico"><x-icon name="settings" /></span> Account Settings
+</a>
 @endsection

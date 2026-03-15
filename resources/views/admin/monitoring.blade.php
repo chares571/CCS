@@ -119,7 +119,7 @@
                             <strong>Guardian Contact:</strong> {{ $application->guardian_contact_number ?: 'N/A' }}
                         </td>
                         <td><span class="badge {{ $application->status }}">{{ \App\Support\StatusLabel::for($application->status) }}</span></td>
-                        <td>{{ optional($application->submitted_at)->format('M d, Y h:i A') ?? '-' }}</td>
+                        <td>{{ optional($application->submitted_at)->format('m/d/Y h:i A') ?? '-' }}</td>
                         <td class="action-row">
                             <a class="btn" href="{{ route('admin.monitoring.show', $application) }}">View Enrollment Form</a>
                         </td>

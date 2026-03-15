@@ -2,6 +2,12 @@
 
 @section('page_title', 'Enrollment Form')
 @section('page_subtitle', 'View, print, and securely edit enrollment application')
+@section('page_title_above')
+    <a class="btn btn-logout btn-icon" href="{{ route('master.monitoring') }}" aria-label="Return to monitoring list">
+        <x-icon name="back" />
+        <span class="sr-only">Return</span>
+    </a>
+@endsection
 
 @section('content')
 <section class="panel print-hide">
@@ -10,7 +16,6 @@
         <p class="muted">Status: <span class="badge {{ $application->status }}">{{ \App\Support\StatusLabel::forSuperAdmin($application->status) }}</span></p>
     </div>
     <div class="action-row">
-        <a class="btn btn-secondary" href="{{ route('master.monitoring') }}">Return</a>
         <button class="btn" type="button" onclick="window.print()">Print</button>
     </div>
 

@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en-US">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -49,6 +49,11 @@
                     </span>
                 </button>
                 <div>
+                    @hasSection('page_title_above')
+                        <div class="page-title-above print-hide">
+                            @yield('page_title_above')
+                        </div>
+                    @endif
                     <h1 class="page-title">@yield('page_title', 'Dashboard')</h1>
                     <p class="muted">@yield('page_subtitle', 'Cabugbugan Community School Management Portal')</p>
                 </div>
@@ -74,8 +79,8 @@
         <h2 id="logoutConfirmTitle">Confirm Logout</h2>
         <p id="logoutConfirmDesc">Are you sure you want to log out from your account?</p>
         <div class="logout-modal__actions">
-            <button type="button" class="btn btn-logout" data-dismiss-logout>Cancel</button>
-            <button type="button" class="btn" id="logoutConfirmBtn">Log Out</button>
+            <button type="button" class="btn btn-danger" data-dismiss-logout>Cancel</button>
+            <button type="button" class="btn btn-logout" id="logoutConfirmBtn">Log Out</button>
         </div>
     </div>
 </div>
