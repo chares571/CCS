@@ -759,6 +759,9 @@ body.admin-portal {
     letter-spacing: .2px;
     background: rgba(255,255,255,.06);
     transition: transform .14s ease, background .14s ease, box-shadow .14s ease;
+    min-width: 0;
+    text-align: center;
+    line-height: 1.25;
 }
 
 .enduser-link:hover {
@@ -2878,14 +2881,14 @@ tr:nth-child(even) td { background: #fbfdff; }
         justify-content: flex-start;
         width: 100%;
         display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-columns: repeat(3, minmax(0, 1fr));
         gap: 8px;
     }
 
     .enduser-link,
     .enduser-account-toggle {
         min-height: 42px;
-        white-space: nowrap;
+        white-space: normal;
     }
 
     .enduser-account-toggle {
@@ -3016,6 +3019,13 @@ tr:nth-child(even) td { background: #fbfdff; }
         opacity: .95;
     }
 
+    .enduser-user > .enduser-link {
+        width: 100%;
+        justify-content: flex-start;
+        border-radius: 12px;
+        padding: 11px 14px;
+    }
+
     .enduser-user form {
         width: 100%;
         margin-top: auto;
@@ -3072,7 +3082,14 @@ tr:nth-child(even) td { background: #fbfdff; }
     }
 
     .enduser-menu {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 6px;
+    }
+
+    .enduser-link {
+        padding: 8px 10px;
+        font-size: 13px;
+        gap: 5px;
     }
 
     .enduser-status-cta .btn {
@@ -3105,6 +3122,37 @@ tr:nth-child(even) td { background: #fbfdff; }
     .panel {
         padding: 12px;
         border-radius: 12px;
+    }
+
+    .panel-head {
+        align-items: flex-start;
+    }
+
+    .panel-head h2,
+    .panel-head h3,
+    .panel-head p {
+        width: 100%;
+    }
+
+    .settings-profile-row {
+        grid-template-columns: 1fr;
+        justify-items: center;
+        text-align: center;
+    }
+
+    .settings-profile-meta {
+        width: 100%;
+    }
+
+    .settings-profile-actions > .btn,
+    .panel form > .btn {
+        width: 100%;
+    }
+
+    input,
+    select,
+    textarea {
+        font-size: 16px;
     }
 
     .action-inline > input,
@@ -3236,6 +3284,62 @@ tr:nth-child(even) td { background: #fbfdff; }
         border-radius: 10px;
         min-height: 40px;
         font-weight: 700;
+    }
+
+    .feed-post {
+        padding: 10px;
+    }
+
+    .feed-post img {
+        max-height: 280px;
+    }
+}
+
+@media (max-width: 560px) {
+    .enduser-topnav-inner {
+        grid-template-columns: minmax(0, 1fr) auto;
+        grid-template-areas:
+            "brand account"
+            "menu";
+        align-items: center;
+    }
+
+    .enduser-brand {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .enduser-account-toggle {
+        width: auto;
+        justify-self: end;
+    }
+
+    .enduser-menu {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 6px;
+    }
+
+    .enduser-user {
+        width: min(92vw, 360px);
+    }
+
+    .enduser-link {
+        padding: 8px 8px;
+        font-size: 12px;
+    }
+
+    .enduser-link .ui-icon {
+        width: 14px;
+        height: 14px;
+    }
+
+    .settings-profile-avatar {
+        width: 76px;
+        height: 76px;
+    }
+
+    .settings-profile-initials {
+        font-size: 20px;
     }
 }
 

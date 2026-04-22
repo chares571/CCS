@@ -1,7 +1,7 @@
 @extends('layouts.super-admin')
 
 @section('page_title', 'User Accounts')
-@section('page_subtitle', 'Role management and account activation control')
+@section('page_subtitle', 'Role management, account activation control, and deletion approvals')
 
 @section('content')
 <section class="panel">
@@ -14,6 +14,7 @@
                 <th>Email</th>
                 <th>Role</th>
                 <th>Status</th>
+                <th>Deletion Request</th>
                 <th>Role Change</th>
                 <th>Activation</th>
             </tr>
@@ -28,6 +29,22 @@
                         <span class="badge {{ $user->is_active ? 'approved' : 'rejected' }}">
                             {{ $user->is_active ? 'ACTIVE' : 'DEACTIVATED' }}
                         </span>
+                    </td>
+                    <td>
+                        @if($user->account_deletion_requested_at)
+                            <div class="action-row">
+                                <span class="badge pending">REQUESTED</span>
+                                <span class="muted">{{ $user->account_deletion_requested_at->format('M d, Y h:i A') }}</span>
+                                <form method="POST" action="{{ route('super-admin.users.approve-deletion', $user) }}" onsubmit="return confirm('Approve this account deletion request? This will deactivate and remove the account.');">
+                                    @csrf
+                                    <button class="btn btn-danger mt-6" type="submit">Approve Deletion</button>
+                                </form>
+                            </div>
+                        @elseif(in_array($user->role, ['parent', 'student'], true))
+                            <span class="muted">No request</span>
+                        @else
+                            <span class="muted">N/A</span>
+                        @endif
                     </td>
                     <td>
                         @if($user->role !== 'super_admin')
@@ -58,7 +75,7 @@
                     </td>
                 </tr>
             @empty
-                <tr><td colspan="6">No users found.</td></tr>
+                <tr><td colspan="7">No users found.</td></tr>
             @endforelse
             </tbody>
         </table>

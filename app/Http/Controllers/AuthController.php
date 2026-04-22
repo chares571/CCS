@@ -38,7 +38,7 @@ class AuthController extends Controller
         $username = $base;
         $counter = 1;
 
-        while (User::where('username', $username)->exists()) {
+        while (User::withTrashed()->where('username', $username)->exists()) {
             $username = $base.$counter;
             $counter++;
         }
@@ -59,13 +59,11 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $credentials = $request->validate([
-            'email' => 'required|string',
+            'email' => 'required|email',
             'password' => 'required|string',
         ]);
 
-        $loginField = filter_var($credentials['email'], FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
-
-        if (!Auth::attempt([$loginField => $credentials['email'], 'password' => $credentials['password']], $request->boolean('remember'))) {
+        if (!Auth::attempt(['email' => $credentials['email'], 'password' => $credentials['password']], $request->boolean('remember'))) {
             return back()->withErrors(['email' => 'Invalid credentials.'])->onlyInput('email');
         }
 

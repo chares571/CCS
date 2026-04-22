@@ -21,6 +21,7 @@ class User extends Authenticatable
         'is_active',
         'force_password_change',
         'profile_photo_path',
+        'account_deletion_requested_at',
     ];
 
     protected $hidden = [
@@ -35,6 +36,7 @@ class User extends Authenticatable
             'password' => 'hashed',
             'is_active' => 'boolean',
             'force_password_change' => 'boolean',
+            'account_deletion_requested_at' => 'datetime',
         ];
     }
 

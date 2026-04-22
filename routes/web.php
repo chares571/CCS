@@ -9,6 +9,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\EndUser\ApplicationController;
 use App\Http\Controllers\EndUser\HomepageController;
+use App\Http\Controllers\EndUser\ProfileController;
 use App\Http\Controllers\SuperAdmin\BackupController;
 use App\Http\Controllers\SuperAdmin\DecisionController;
 use App\Http\Controllers\SuperAdmin\SuperAdminDashboardController;
@@ -121,6 +122,12 @@ Route::middleware(['auth', 'active', 'force.password.change', 'role:parent,stude
     ->group(function () {
         Route::get('/', [HomepageController::class, 'index'])->name('homepage');
         Route::get('/feed', [HomepageController::class, 'feed'])->name('homepage.feed');
+        Route::get('/profile', [ProfileController::class, 'index'])->name('homepage.profile');
+        Route::post('/profile', [ProfileController::class, 'updateProfile'])->name('homepage.profile.update');
+        Route::post('/profile/password', [ProfileController::class, 'updatePassword'])->name('homepage.profile.password.update');
+        Route::post('/profile/photo', [ProfileController::class, 'updateProfilePhoto'])->name('homepage.profile.photo.update');
+        Route::post('/profile/photo/remove', [ProfileController::class, 'removeProfilePhoto'])->name('homepage.profile.photo.remove');
+        Route::delete('/profile', [ProfileController::class, 'destroy'])->name('homepage.profile.destroy');
         Route::get('/announcements/{announcement}', [HomepageController::class, 'showAnnouncement'])->name('homepage.announcements.show');
         Route::get('/enrollment', [HomepageController::class, 'enrollment'])->name('homepage.enrollment');
         Route::post('/applications', [ApplicationController::class, 'store'])->name('applications.store');
@@ -194,6 +201,7 @@ Route::middleware(['auth', 'active', 'force.password.change', 'role:super_admin'
         Route::get('/users', [UserManagementController::class, 'index'])->name('users.index');
         Route::post('/users/{user}/toggle-active', [UserManagementController::class, 'toggleActive'])->name('users.toggle-active');
         Route::post('/users/{user}/role', [UserManagementController::class, 'updateRole'])->name('users.update-role');
+        Route::post('/users/{user}/approve-deletion', [UserManagementController::class, 'approveDeletion'])->name('users.approve-deletion');
         Route::get('/audit-logs', [AuditLogController::class, 'index'])->name('audit-logs.index');
         Route::get('/settings', [SettingsController::class, 'index'])->name('settings.index');
         Route::post('/settings/profile', [SettingsController::class, 'updateProfile'])->name('settings.profile.update');

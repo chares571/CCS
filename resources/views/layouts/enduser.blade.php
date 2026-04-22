@@ -21,10 +21,13 @@
 
             <nav class="enduser-menu" aria-label="Parent and student navigation">
                 <a class="enduser-link {{ request()->routeIs('homepage.feed') ? 'active' : '' }}" href="{{ route('homepage.feed') }}">
-                    <x-icon name="announcements" /> Information Feed
+                    <x-icon name="home" /> Home
                 </a>
                 <a class="enduser-link {{ request()->routeIs('homepage') || request()->routeIs('homepage.enrollment') || request()->routeIs('applications.*') ? 'active' : '' }}" href="{{ route('homepage.enrollment') }}">
                     <x-icon name="enrollment" /> Enrollment
+                </a>
+                <a class="enduser-link {{ request()->routeIs('homepage.profile*') ? 'active' : '' }}" href="{{ route('homepage.profile') }}">
+                    <x-icon name="profile" /> Profile
                 </a>
             </nav>
 

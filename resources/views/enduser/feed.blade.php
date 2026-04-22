@@ -1,7 +1,7 @@
 @extends('layouts.enduser')
 
-@section('page_title', 'Information Feed')
-@section('page_subtitle', 'School announcements and official updates.')
+@section('page_title', '')
+@section('page_subtitle', '')
 
 @section('content')
 @if($application)
@@ -34,7 +34,8 @@
 
 <section class="panel">
     <div class="panel-head">
-        <h2><span class="icon-inline"><x-icon name="announcements" /> Announcement Feed</span></h2>
+        <h2><span class="icon-inline"><x-icon name="announcements" /> Announcements</span></h2>
+        <p class="muted">School announcements and official updates.</p>
     </div>
 
     @forelse($announcements as $a)
