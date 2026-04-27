@@ -36,7 +36,7 @@
                             <button class="btn btn-logout" type="submit">Logout</button>
                         </form>
                     @else
-                        <a class="btn welcome-btn-login" href="{{ route('login') }}">Sign In</a>
+                        <a class="btn welcome-btn-login" href="{{ route('login') }}">Sign in</a>
                         <a class="btn welcome-btn-register" href="{{ route('register') }}">Register</a>
                     @endauth
                 </div>
